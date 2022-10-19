@@ -33,7 +33,7 @@ To learn the software, we recommend the <a href="https://www.odoo.com/slides">Od
 
 
 System workflow
-
+-------------------------
 
 
 
@@ -53,9 +53,11 @@ To get barcode and weights there is a separate service build on Fast api.
 
 
 Install [SOP] Customized (by Vervebot) Odoo
+-------------------------
 
 
 System Preparation
+-------------------------
 
 
 Visual c++ 14.0 or higher
@@ -70,6 +72,7 @@ For Windows
 	Restart system and check in cmd typing wkhtmltopdf
 
 Installation
+-------------------------
 Backup  Demo working database in directory format and restore it in new server
 Set binary path in pgadmin4 
 Go to file > preference > binary path
@@ -87,6 +90,7 @@ Check Login And Other Functionalities
 
 
 Connect all system in same network using local IP
+-------------------------
 
 Search Windows Defender Firewall
 Click on Advance Options
@@ -110,6 +114,7 @@ Enable incoming " PING " in Windows 10 | NETVN
 
 
 API For Barcode and weight scale
+-------------------------
 
 Open FastAPI Project 
 Install required modules by running command pip install -r requirements.txt
