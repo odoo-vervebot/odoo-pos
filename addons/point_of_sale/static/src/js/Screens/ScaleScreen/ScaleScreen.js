@@ -123,7 +123,7 @@ odoo.define('point_of_sale.ScaleScreen', function(require) {
                     // body: bodyContent,
 
                     
-                    await fetch("http://localhost:8000/COM2", {
+                    await fetch("http://localhost:8055/COM2", {
                         method: "GET",                   
                         headers: headersList
                     }).then(function (response) {

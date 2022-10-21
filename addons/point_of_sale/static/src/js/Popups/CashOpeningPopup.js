@@ -27,8 +27,10 @@ odoo.define('point_of_sale.CashOpeningPopup', function(require) {
             }
         }
         startSession() {
+
             this.env.pos.bank_statement.balance_start = this.state.openingCash;
-            this.env.pos.pos_session.state = 'opened';
+            console.log("this.env.pos.pos_session.id ", this.env.pos.pos_session.id)
+            this.env.pos.pos_session.state = 'opened';  
             this.rpc({
                    model: 'pos.session',
                     method: 'set_cashbox_pos',
@@ -38,6 +40,7 @@ odoo.define('point_of_sale.CashOpeningPopup', function(require) {
         }
         updateCashOpening(event) {
             const { total, moneyDetailsNotes } = event.detail;
+            console.log("this.env.pos.pos_session.state  ", this.env.pos.pos_session.state)
             this.state.openingCash = total;
             if (moneyDetailsNotes) {
                 this.state.notes = moneyDetailsNotes;

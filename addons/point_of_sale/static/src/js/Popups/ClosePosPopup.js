@@ -5,6 +5,7 @@ odoo.define('point_of_sale.ClosePosPopup', function(require) {
     const AbstractAwaitablePopup = require('point_of_sale.AbstractAwaitablePopup');
     const Registries = require('point_of_sale.Registries');
     const { identifyError } = require('point_of_sale.utils');
+    
     const { ConnectionLostError, ConnectionAbortedError} = require('@web/core/network/rpc_service')
 
     /**
@@ -79,6 +80,8 @@ odoo.define('point_of_sale.ClosePosPopup', function(require) {
                     this.moneyDetailsRef.comp.reset();
                 }
             }
+
+            
         }
         handleInputChange(paymentId) {
             let expectedAmount;
@@ -160,6 +163,12 @@ odoo.define('point_of_sale.ClosePosPopup', function(require) {
                     if (!response.successful) {
                         return this.handleClosingError(response);
                     }
+                    console.log("step one")
+                    // location.reload();
+                    // window.location = '/pos/ui';
+                    // this.env.pos.pos_session.state = "opening_control";
+                    // this.showPopup('LoginScreen');
+                    
                     window.location = '/web#action=point_of_sale.action_client_pos_menu';
                 } catch (error) {
                     const iError = identifyError(error);
@@ -176,15 +185,23 @@ odoo.define('point_of_sale.ClosePosPopup', function(require) {
                                 'You will be redirected to the back-end to manually close the session.')
                         })
                         window.location = '/web#action=point_of_sale.action_client_pos_menu';
+                        // window.location = 'pos/ui?config_id=1#cids=1';
+                        // this.showPopup('ClosePosPopup');
+                        console.log("sptep two");
+                        // location.reload();
                     }
                 }
+                // window.location = '/pos/ui';
+                // this.showPopup('ClosePosPopup');
                 this.closeSessionClicked = false;
             }
         }
         async handleClosingError(response) {
             await this.showPopup('ErrorPopup', {title: 'Error', body: response.message});
             if (response.redirect) {
+                // location.reload();
                 window.location = '/web#action=point_of_sale.action_client_pos_menu';
+                // window.location = 'pos/ui?config_id=1#cids=1';
             }
         }
         _getShowDiff(pm) {

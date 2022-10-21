@@ -86,7 +86,7 @@
                         </table>
                     </div>
                     <textarea placeholder="Notes" class="closing-notes" t-model="state.notes"/>
-                    <div class="accept-closing" t-att-class="{invisible: !hasDifference()}">
+                    <div class="accept-closing" t-att-class="{invisible: !hasDifference()}"> 
                         <t t-set="_hasUserAuthority" t-value="hasUserAuthority()" />
                         <input t-att-disabled="!_hasUserAuthority" type="checkbox" id="accept" t-model="state.acceptClosing"/>
                         <label t-att-class="{disabled: !_hasUserAuthority}" for="accept">Accept payments difference and post a profit/loss journal entry</label>

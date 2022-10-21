@@ -27,6 +27,7 @@ class PosController(http.Controller):
         :type config_id: str.
         :returns: object -- The rendered pos session.
         """
+        
         domain = [
                 ('state', 'in', ['opening_control', 'opened']),
                 ('user_id', '=', request.session.uid),
@@ -35,6 +36,9 @@ class PosController(http.Controller):
         if config_id:
             domain = AND([domain,[('config_id', '=', int(config_id))]])
         pos_session = request.env['pos.session'].sudo().search(domain, limit=1)
+        print("====================================================")
+        print(type(request.env['pos.session'].sudo().search(domain, limit=1)))
+        print(request.env['pos.session'].sudo().search(domain, limit=2))
 
         # The same POS session can be opened by a different user => search without restricting to
         # current user. Note: the config must be explicitly given to avoid fallbacking on a random
@@ -47,8 +51,13 @@ class PosController(http.Controller):
             ]
             pos_session = request.env['pos.session'].sudo().search(domain, limit=1)
 
-        if not pos_session:
-            return request.redirect('/web#action=point_of_sale.action_client_pos_menu')
+        
+        if not pos_session: 
+            return request.redirect('/pos/ui')
+            # return request.redirect('/web#action=point_of_sale.action_client_pos_menu')
+        
+        
+
         # The POS only work in one company, so we enforce the one of the session in the context
         company = pos_session.company_id
         session_info = request.env['ir.http'].session_info()

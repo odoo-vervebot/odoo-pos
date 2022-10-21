@@ -58,6 +58,10 @@ odoo.define('pos_hr.LoginScreen', function (require) {
                 this.start_barcode._ConnectBarcodeDevice(true);
                 this.env.pos.set_cashier(employee);
                 this.back();
+                // this.showPopup('CashOpeningPopup');
+                // if(this.env.pos.pos_session.state != 'opened'){
+                //     this.showPopup('CashOpeningPopup');
+                // }
             }
         }
         async _barcodeCashierAction(code) {
