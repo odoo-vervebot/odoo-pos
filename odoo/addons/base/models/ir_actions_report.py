@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+# from curses.ascii import isprint
 from markupsafe import Markup
 
 from odoo import api, fields, models, tools, SUPERUSER_ID, _
@@ -80,6 +81,7 @@ else:
         wkhtmltopdf_state = 'broken'
 
 
+
 class IrActionsReport(models.Model):
     _name = 'ir.actions.report'
     _description = 'Report Action'
@@ -116,6 +118,7 @@ class IrActionsReport(models.Model):
                                     help='If enabled, then the second time the user prints with same attachment name, it returns the previous report.')
     attachment = fields.Char(string='Save as Attachment Prefix',
                              help='This is the filename of the attachment used to store the printing result. Keep empty to not save the printed reports. You can use a python expression with the object and time variables.')
+    # is_print = fields.Boolean(string='is directly printable', help='if True report will directly print through default printer')
 
     @api.depends('model')
     def _compute_model_id(self):
@@ -519,7 +522,22 @@ class IrActionsReport(models.Model):
         report_obj = self.env['ir.actions.report']
         conditions = [('report_name', '=', report_name)]
         context = self.env['res.users'].context_get()
+        # print("===========================_get_report_from_name==================")
+        # print(type(report_obj.with_context(context).sudo().search(conditions, limit=1)))
         return report_obj.with_context(context).sudo().search(conditions, limit=1)
+
+    @api.model
+    def _get_direct_print_status(self):
+        """
+            Check if report needs direct print
+        """
+        # report_obj = self.env['ir.actions.report']
+        # context = self.env.context.get('is_print')
+        print("===============================================Is_print")
+        # for i in report_obj:
+        #     pass
+        # print(self.is_print)
+        return None
 
     @api.model
     def barcode(self, barcode_type, value, **kwargs):
@@ -869,6 +887,8 @@ class IrActionsReport(models.Model):
         data = self._get_rendering_context(docids, data)
         return self._render_template(self.report_name, data), 'text'
 
+    
+
     @api.model
     def _render_qweb_html(self, docids, data=None):
         """This method generates and returns html version of a report.
@@ -913,6 +933,9 @@ class IrActionsReport(models.Model):
         if not render_func:
             return None
         return render_func(res_ids, data=data)
+    
+    # def __init__(self):
+    #     self.is_print=False
 
     def report_action(self, docids, data=None, config=True):
         """Return an action of type ir.actions.report.
@@ -937,12 +960,17 @@ class IrActionsReport(models.Model):
             'data': data,
             'type': 'ir.actions.report',
             'report_name': self.report_name,
+            # 'report_type': 'qweb-html',
             'report_type': self.report_type,
             'report_file': self.report_file,
             'name': self.name,
         }
-
+        print("===============================ir action Report")
         discard_logo_check = self.env.context.get('discard_logo_check')
+        # is_print = self.env.context.get('is_print')
+        print("===============================================Is_print")
+        # print(is_print)
+        
         if self.env.is_admin() and not self.env.company.external_report_layout_id and config and not discard_logo_check:
             action = self.env["ir.actions.actions"]._for_xml_id("web.action_base_document_layout_configurator")
             ctx = action.get('context')
@@ -950,6 +978,10 @@ class IrActionsReport(models.Model):
             report_action['close_on_report_download'] = True
             py_ctx['report_action'] = report_action
             action['context'] = py_ctx
+            print("===============================ir action Report")
+            print(py_ctx)
+            print(type(py_ctx))
             return action
-
+        print(type(report_action))
+        print(report_action)
         return report_action

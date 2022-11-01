@@ -1948,6 +1948,29 @@ class ReportController(http.Controller):
             return request.make_response(html)
         elif converter == 'pdf':
             pdf = report.with_context(context)._render_qweb_pdf(docids, data=data)[0]
+            # is_print = request.env.context.get('is_print')
+            # print("===============================================Is_print")
+            # print(is_print)
+            print("===================================Data============================")
+            print(data) #{'context': {'lang': 'en_US', 'tz': 'Asia/Calcutta', 'uid': 2, 'allowed_company_ids': [1]}, 'report_type': 'pdf'}
+            # direct print start
+
+            report = request.env['ir.actions.report']._get_report_from_name(reportname)
+            is_print = request.session['is_print']
+            if is_print:
+                print("====print===")
+                print(is_print)
+                filename = "%s.%s" % (report.name, "pdf")
+                import os
+                output_dir = '.\Outputs'
+                file_path = os.path.join(output_dir, os.path.basename(filename))
+                with open(file_path, 'wb') as f:
+                    f.write(pdf)
+                os.startfile(os.path.join(output_dir, os.path.basename(filename)), 'print')
+                request.session['is_print'] = False
+            # direct print Ends
+            
+
             pdfhttpheaders = [('Content-Type', 'application/pdf'), ('Content-Length', len(pdf))]
             return request.make_response(pdf, headers=pdfhttpheaders)
         elif converter == 'text':
@@ -2002,6 +2025,11 @@ class ReportController(http.Controller):
 
         """
         requestcontent = json.loads(data)
+        print("========================Passed Data=======================")
+        print(data)
+        # is_print = self.env.context.get('is_print')
+        # print("===============================================Is_print")
+        # print(is_print)
         url, type = requestcontent[0], requestcontent[1]
         reportname = '???'
         try:
@@ -2026,10 +2054,13 @@ class ReportController(http.Controller):
                         context, data_context = json.loads(context or '{}'), json.loads(data.pop('context'))
                         context = json.dumps({**context, **data_context})
                     response = self.report_routes(reportname, converter=converter, context=context, **data)
-
+                # print(response.request)
+                # print(type(response))
                 report = request.env['ir.actions.report']._get_report_from_name(reportname)
                 filename = "%s.%s" % (report.name, extension)
-
+                print("=========================Report FileName")
+                
+                print(filename)
                 if docids:
                     ids = [int(x) for x in docids.split(",")]
                     obj = request.env[report.model].browse(ids)
@@ -2037,6 +2068,19 @@ class ReportController(http.Controller):
                         report_name = safe_eval(report.print_report_name, {'object': obj, 'time': time})
                         filename = "%s.%s" % (report_name, extension)
                 response.headers.add('Content-Disposition', content_disposition(filename))
+                print(response)
+                print("============================================ Connect with printer===")
+                import os
+                output_dir = '.\Outputs'
+                # print(type(report))
+                # for res in report:
+                #     for r in res:
+                #         print(r)
+                # if response.status_code == 200:
+                #     file_path = os.path.join(output_dir, os.path.basename(filename))
+                #     with open(file_path, 'wb') as f:
+                #         f.write(response.pdf)
+                # os.startfile(os.path.join(output_dir, os.path.basename(filename)), 'print')
                 return response
             else:
                 return

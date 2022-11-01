@@ -6,6 +6,7 @@
 from odoo import api, fields, models, _
 from odoo.exceptions import Warning
 
+from odoo.http import request
 
 class PrintProductLabel(models.TransientModel):
     _name = "print.product.label"
@@ -70,14 +71,21 @@ class PrintProductLabel(models.TransientModel):
         string='Border',
         help='Border width for labels (in pixels). Set "0" for no border.'
     )
-
+    
     def action_print(self):
         """ Print labels """
         self.ensure_one()
         labels = self.label_ids.filtered('selected').mapped('id')
+        print("======================hajkdajkdkdk======================")
         if not labels:
             raise Warning(_('Nothing to print, set the quantity of labels in the table.'))
+        print(type(self.env.ref(self.template).with_context(discard_logo_check=True, is_print=True).report_action(labels)))
+        request.session['is_print'] = True
         return self.env.ref(self.template).with_context(discard_logo_check=True).report_action(labels)
+        # print(type(self.env.ref(self.template).with_context(discard_logo_check=True).report_action(labels)))
+        # return self.env.ref(self.template).with_context(discard_logo_check=True).report_action(labels)
+
+    
 
     def action_preview(self):
         """ Preview labels """

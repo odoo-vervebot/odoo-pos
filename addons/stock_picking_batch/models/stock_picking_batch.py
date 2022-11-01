@@ -267,6 +267,7 @@ class StockPickingBatch(models.Model):
 
     def action_open_label_layout(self):
         view = self.env.ref('stock.product_label_layout_form_picking')
+        print("================AAAAAAAAAAAAAAAAAAAAA==================")
         return {
             'name': _('Choose Labels Layout'),
             'type': 'ir.actions.act_window',
