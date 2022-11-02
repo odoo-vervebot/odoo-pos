@@ -28,6 +28,8 @@
         'wizard/pos_order_payment_report.xml',
         'report/pos_order_payment_template.xml',
         'report/pos_order.xml',
+        'wizard/pos_order_customer_product_report.xml',
+        'report/pos_report_customer_template.xml'
     ],
     'qweb': [],
     'css': [],

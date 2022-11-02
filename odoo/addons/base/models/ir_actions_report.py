@@ -965,10 +965,10 @@ class IrActionsReport(models.Model):
             'report_file': self.report_file,
             'name': self.name,
         }
-        print("===============================ir action Report")
+        # print("===============================ir action Report")
         discard_logo_check = self.env.context.get('discard_logo_check')
         # is_print = self.env.context.get('is_print')
-        print("===============================================Is_print")
+        # print("===============================================Is_print")
         # print(is_print)
         
         if self.env.is_admin() and not self.env.company.external_report_layout_id and config and not discard_logo_check:
@@ -978,10 +978,10 @@ class IrActionsReport(models.Model):
             report_action['close_on_report_download'] = True
             py_ctx['report_action'] = report_action
             action['context'] = py_ctx
-            print("===============================ir action Report")
-            print(py_ctx)
-            print(type(py_ctx))
+            # print("===============================ir action Report")
+            # print(py_ctx)
+            # print(type(py_ctx))
             return action
-        print(type(report_action))
-        print(report_action)
+        # print(type(report_action))
+        # print(report_action)
         return report_action

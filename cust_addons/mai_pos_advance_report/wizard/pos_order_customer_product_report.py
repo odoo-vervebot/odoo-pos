@@ -1,12 +1,13 @@
 import time
 from datetime import datetime
+import datetime
+from traceback import print_tb
 from dateutil.relativedelta import relativedelta
 from odoo.tools.translate import _
 from odoo.exceptions import except_orm
 from odoo import models, fields, api
 from odoo.tools.misc import str2bool, xlwt
 from xlwt import easyxf
-from operator import itemgetter
 
 try:
     from odoo.tools.misc import xlsxwriter
@@ -19,18 +20,22 @@ except ImportError:
     from io import StringIO,BytesIO  
 
 
-class POSProduct(models.TransientModel):
-    _name = 'pos.order.product.wizard'
-    _description = 'POS Product Report'
+class POSCustomer(models.TransientModel):
+    _name = 'pos.order.customer.product.wizard'
+    _description = 'POS Customer Product Report'
 
     start_date = fields.Datetime(required=True, default=fields.Datetime.now)
     end_date = fields.Datetime(required=True, default=fields.Datetime.now)
+    # res_users_ids = fields.One2many('res.partner', 'commercial_partner_id', string='users')
+    # res_users_ids = fields.One2many('res.users', 'user_id', string='users')
+    res_users_ids = fields.Many2many('res.partner', string='Customer')
     pos_config_id = fields.Many2one('pos.config', 'Point Of Sale')
     pos_categ_ids = fields.Many2many('pos.category', string='POS Category')
     product_id = fields.Many2one('product.product', 'Product')
     
     @api.model
     def get_lines(self):
+        print("=================================================Start")
         domain = [
             ('order_id.state', 'in', ['paid','done','invoiced']),
             ('order_id.date_order', '>=', self.start_date),
@@ -46,25 +51,45 @@ class POSProduct(models.TransientModel):
         POS_categ_obj = self.env['pos.category']
         if self.pos_categ_ids:
             domain += [('product_id.pos_categ_id', 'child_of', self.pos_categ_ids.ids)]
+
+        if self.res_users_ids:
+            print("=====================================")
+            print(self.res_users_ids.id)
+            # domain += [('write_uid', '=', self.res_users_ids.id)]
+            # domain += [('order_id.user_id', 'in', self.res_users_ids.ids)]
+            domain += [('order_id.partner_id', '=', self.res_users_ids.id)]
         # else:
         #     pos_categ_ids = self.env['pos.category'].search([])
         #     domain += [('product_id.pos_categ_id', 'child_of', pos_categ_ids.ids)]
 
         if self.product_id:
             domain += [('product_id', '=', self.product_id.id)]
-
+        # [('order_id.state', 'in', ['paid', 'done', 'invoiced']), ('order_id.date_order', '>=', datetime.datetime(2022, 8, 8, 6, 53, 52)), ('order_id.date_order', '<=', datetime.datetime(2022, 11, 2, 6, 53, 52)), ('order_id.user_id', 'in', [9])]
+        # [('order_id.state', 'in', ['paid', 'done', 'invoiced']), ('order_id.date_order', '>=', datetime.datetime(2022, 10, 3, 5, 26, 23)), ('order_id.date_order', '<=', datetime.datetime(2022, 11, 2, 5, 26, 23)), ('order_id.user_id', '=', 9)]
+        # [('order_id.state', 'in', ['paid', 'done', 'invoiced']), ('order_id.date_order', '>=', datetime.datetime(2022, 10, 19, 5, 30, 46)), ('order_id.date_order', '<=', datetime.datetime(2022, 11, 2, 5, 30, 46)), ('product_id', '=', 32462)]
+        print("=====================================")
+        print(domain)
+        # order_lines = self.env['pos.order.line'].search([])
+        # order_lines = self.env['pos.order.line'].search([ ('order_id.user_id', 'in', [2])])
+        # order_lines = self.env['pos.order.line'].search([('order_id.state', 'in', ['paid', 'done', 'invoiced']), ('order_id.date_order', '>=', datetime.datetime(2022, 10, 3, 5, 26, 23)), ('order_id.date_order', '<=', datetime.datetime(2022, 11, 2, 5, 26, 23)), ('order_id.user_id', '=', 2)])
         order_lines = self.env['pos.order.line'].search(domain)
+        # print(type(order_lines))
         category_list_data = []
         category_data_dict = {}
+        # print("===================================== line.product_id.id")
         for line in order_lines:
+            print("===================================== line.product_id.id")
+            print(line.product_id.id)
             life_date = fields.Datetime.from_string(line.order_id.date_order.date())
             exp = life_date.strftime('%y%m%d')
             # uniqu_id = int(exp) + line.product_id.pos_categ_id.id + line.product_id.id
-            uniqu_id = int(exp) * line.product_id.id
+            uniqu_id = int(exp) * line.order_id.user_id.id
+            # uniqu_id = int(exp) * line.product_id.id
             gross_profit = line.price_subtotal_incl - line.product_id.standard_price
             tax_amount = line.price_subtotal_incl - line.price_subtotal
             total_cost = line.qty * line.product_id.standard_price
             gross_profit = line.price_subtotal - total_cost
+            print("=====================================")
             if uniqu_id not in category_list_data:
                 suppliers = [l.name.name for l in line.product_id.variant_seller_ids]
 
@@ -99,10 +124,6 @@ class POSProduct(models.TransientModel):
             final_list.append(category_data_dict.get(a))
         
         final_list = sorted(final_list, key = lambda i: i['date'])
-        final_list = sorted(final_list, key=itemgetter('qty') , reverse=True) 
-        # final_list = sorted(final_list, key = lambda i: i['qty'])
-        print("===========================================")
-        print(final_list)
         return final_list
     
     def _print_exp_report(self, data):
@@ -232,7 +253,7 @@ class POSProduct(models.TransientModel):
         import io
         fp = io.BytesIO()
         workbook.save(fp)
-        export_id = self.env['pos.product.report'].create(
+        export_id = self.env['pos.customer.report'].create(
             {'excel_file': base64.encodestring(fp.getvalue()),
              'file_name': filename},)
         fp.close()
@@ -240,7 +261,7 @@ class POSProduct(models.TransientModel):
         return {
             'view_mode': 'form',
             'res_id': export_id.id,
-            'res_model': 'pos.product.report',
+            'res_model': 'pos.customer.report',
             'view_type': 'form',
             'type': 'ir.actions.act_window',
             'context': self._context,
@@ -263,8 +284,8 @@ class POSProduct(models.TransientModel):
         }
         return self.env.ref('mai_pos_advance_report.action_print_product_clonet').report_action([], data=datas)
 
-class pos_product_report_download(models.TransientModel):
-    _name = "pos.product.report"
+class pos_customer_report_download(models.TransientModel):
+    _name = "pos.customer.report"
     
     excel_file = fields.Binary('Excel Report')
     file_name = fields.Char('Excel File', size=64)
