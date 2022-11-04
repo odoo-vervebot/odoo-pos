@@ -35,18 +35,18 @@
     },
     'data': [
         'views/dashboard_views.xml',
-        'views/demo_report_views.xml',
+        # 'views/demo_report_views.xml',
     ],
      'assets': {
         'web.assets_backend': [
             'dashboard_pos/static/src/js/pos_dashboard.js',
-            'dashboard_pos/static/src/js/pos_demo_report.js',
+            # 'dashboard_pos/static/src/js/pos_demo_report.js',
             'dashboard_pos/static/src/css/pos_dashboard.css',
             'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js',
         ],
         'web.assets_qweb': [
             'dashboard_pos/static/src/xml/pos_dashboard.xml',
-            'dashboard_pos/static/src/xml/demo_report.xml',
+            # 'dashboard_pos/static/src/xml/demo_report.xml',
         ],
     },
     'images': ['static/description/banner.png'],
