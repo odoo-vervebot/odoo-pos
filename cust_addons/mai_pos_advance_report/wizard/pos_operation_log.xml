@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+     <record id="view_pos_customer_product_report_form_view" model="ir.ui.view">
+        <field name="name">pos.operation.log.wizard.form.view</field>
+        <field name="model">pos.operation.log.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Pos Operation Log Details">
+                <group col="4">
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                </group>
+                <footer>
+                    <button name="generate_pdf_report" string="View Report" type="object" class="btn-primary"/>
+                    <button name="generate_excel_report" string="Print Excel" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_report_pos_operation_report" model="ir.actions.act_window">
+        <field name="name">Pos Operation Log Report</field>
+        <field name="res_model">pos.operation.log.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+
+    <record id="view_pos_customer_report_download_form" model="ir.ui.view">
+        <field name="name">pos.session.report.form</field>
+        <field name="model">pos.session.report</field>
+        <field name="arch" type="xml">
+            <form string="POS Excel Report Details">
+                <field name="file_name" invisible="1"/>
+                <field name="excel_file" filename='file_name' readonly="1"/>
+                <footer>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="act_pos_customer_report_download">
+        <field name="name">Pos Operation Log Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">pos.customer.report</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="view_id" ref="view_pos_customer_report_download_form"/>
+    </record>
+
+   <menuitem id="menu_report_pos_customer_report" name="Pos Operation Log Report" action="action_report_pos_operation_report" parent="point_of_sale.menu_point_rep" sequence="4"/>
+
+</odoo>
