@@ -2,10 +2,30 @@
 <odoo>
     <data>
         <template id="report_pos_top_selling_products">
-           
+
             <t t-call="web.html_container">
-                <t t-call="web.external_layout">
-                    <div class="page">
+                <t t-call="web.basic_layout">
+                    <div class="page" style="font-size: 15px">
+                        <style type="text/css">
+		                 <style type="text/css">
+		                table th, h4 {
+		                background-color: #71639e;
+                        padding: 5px;
+                        color: #fff;
+                        text-transform: uppercase;
+		                }
+                        .page {
+                                width: 80%;
+                                margin-left: 10%;
+                                border: 4px #4ab332 solid;
+                            }
+                        </style>
+                        </style>
+
+
+
+
+
                         <div class="text-center">
                             <h2>Top Selling Products</h2>
                         </div>

@@ -1,78 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-<data>
-    <template id="report_pos_saledetails">
-        <t t-set="company" t-value="env.company"/>
-        <t t-call="web.html_container">
-            <t t-call="web.external_layout">
-                <div class="page">
-                    <div class="text-center">
-                        <h2>Sales Summary</h2>
-                        <strong><t t-esc="date_start" t-options="{'widget': 'datetime'}"/> - <t t-esc="date_stop" t-options="{'widget': 'datetime'}"/></strong>
-                    </div>
-                    <t t-foreach="order_summary" t-as="record">
-                        <t t-if="record['total_sales']">
-                            <strong><h4>Name : <t t-esc="record['user']"/></h4></strong>
-                        <br/>
-                        <table  class="table table-lg">
-                            <tbody>
+    <data>
+        <template id="report_pos_saledetails">
+            <t t-set="company" t-value="env.company"/>
+            <!-- <t t-call="web.html_container"> -->
+            <t t-call="web.basic_layout">
+                <div class="page" style="font-size: 15px">
+                    <style type="text/css">
+		                table th, h4 {
+                            background-color: #71639e;
+                            padding: 0px;
+                            color: #fff;
+                            text-transform: capitalize;
+                            padding-left: 50px;
+                            padding: 5px 0px 5px 5px;
+                        }
+                        td {
+                            vertical-align: baseline;
+                        }
+                        .page {
+                                width: 80%;
+                                margin-left: 10%;
+                                border: 4px #71639e solid;
+                            }
+                       
+                        table {
+                            width: 100%;
+                        }
+                        th {
+                                text-align: center;
+                            }
+
+                        td.cat-heading {
+                            font-weight: 700;
+                            text-align: center;
+                            text-transform: uppercase;
+                            border-bottom: 2px solid #017e84;
+                        }
+                    </style>
+                    <table>
+                        <tr>
+                            <th colspan="3">
+                                <h2>Sales Summary</h2>
+                                <strong>
+                                    <t t-esc="date_start" t-options="{'widget': 'datetime'}"/>
+ -                                    <t t-esc="date_stop" t-options="{'widget': 'datetime'}"/>
+                                </strong>
+                            </th>
+                            
+                        </tr>
+
+
+                        <t t-foreach="order_summary" t-as="record">
+                            <t t-if="record['total_sales']">
                                 <tr>
-                                    <td>Sales:</td>
-                                    <td style="text-align: right;"><t t-esc="record['total_sales']" t-options="{'widget': 'float', 'precision': currency_precision}"/></td>
+                                    <td colspan="3" >
+
+                                        <strong>
+                                            <h4>Name : <t t-esc="record['user']"/>
+                                            </h4>
+                                        </strong>
+                                    </td>
+                                </tr>
+                                 <tr>
+                                    <td class="cat-heading" >
+                                        Total Sales
+                                        
+                                    </td>
+                                    <td class="cat-heading" >
+                                        Department Sales
+                                        
+                                    </td>
+                                    <td class="cat-heading" >
+                                        Payment
+                                        
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td>Total:</td>
-                                    <td style="text-align: right;"><t t-esc="record['total_sales']" t-options="{'widget': 'float', 'precision': currency_precision}"/></td>
+                                    <td>
+
+                                        
+                                        <table class="table-sale">
+                                            <tbody>
+                                                <!-- <tr>
+                                                    <td colspan="2">Total Sales</td>
+                                                   
+                                                </tr> -->
+                                                <tr>
+                                                    <td>Sales:</td>
+                                                    <td style="text-align: right;">
+                                                     &#x24;   <t t-esc="record['total_sales']" t-options="{'widget': 'float', 'precision': currency_precision}"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Total:</td>
+                                                    <td style="text-align: right;">
+                                                      &#x24;  <t t-esc="record['total_sales']" t-options="{'widget': 'float', 'precision': currency_precision}"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tax:</td>
+                                                    <td style="text-align: right;">
+                                                      &#x24;  <t t-esc="record['tax']" t-options="{'widget': 'float', 'precision': currency_precision}"/>
+                                                    </td>
+                                                </tr>
+                                                <tr class="gross-total" >
+                                                    <td>Gross Total:</td>
+                                                    <td style="text-align: right;">
+                                                     &#x24;   <t t-esc="record['total_sales']" t-options="{'widget': 'float', 'precision': currency_precision}"/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                    </td>
+                                    <td>
+                                        <table class="">
+                                            <!-- <tr>
+                                                <th>
+                                                        Category
+                                                </th>
+                                                <th>
+                                                       Total
+                                                    
+                                                </th>
+                                            </tr> -->
+                                             <!-- <tr> <td colspan="2">Department Sales</td></tr> -->
+                                            <tr t-foreach="record['categories']" t-as='categ'>
+                                               
+                                                   
+                                                <td>
+                                                    <t t-esc="categ['name']" />
+                                                </td>
+                                                <td style="text-align: right;">
+                                                 &#x24;   <t t-esc="categ['amount']" t-options="{'widget': 'float', 'precision': currency_precision}"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                    </td>
+
+                                    <td>
+                                        <table>
+
+                                            <!-- <tr>
+                                                <th>
+                                                        Payment Type
+                                                </th>
+                                                <th>
+                                                    Total
+                                                    
+                                                </th>
+                                            </tr> -->
+                                             <!-- <tr> <td colspan="2">Payment</td></tr> -->
+                                            <tr t-foreach="record['payments']" t-as='payment'>
+                                            
+                                                <td>
+                                                    <t t-esc="payment['name']" />
+                                                </td>
+                                                <td style="text-align: right;">
+                                                 &#x24;   <t t-esc="payment['total']" t-options="{'widget': 'float', 'precision': currency_precision}"/>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+
+                                    </td>
                                 </tr>
-                                <tr>
-                                    <td>Tax:</td>
-                                    <td style="text-align: right;"><t t-esc="record['tax']" t-options="{'widget': 'float', 'precision': currency_precision}"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Gross Total:</td>
-                                    <td style="text-align: right;"><t t-esc="record['total_sales']" t-options="{'widget': 'float', 'precision': currency_precision}"/></td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <br/>
-                        <center><h3>Department Sales</h3></center>
-                        <table  class="table table-lg">
-                            <thead><tr>
-                                <th>Category</th>
-                                <th style="text-align: right;">Total</th>
-                            </tr></thead>
-                            <tbody>
-                            <tr t-foreach="record['categories']" t-as='categ'>
-                                <td><t t-esc="categ['name']" /></td>
-                                <td style="text-align: right;"><t t-esc="categ['amount']" t-options="{'widget': 'float', 'precision': currency_precision}"/></td>
-                            </tr>
-                            </tbody>
-                        </table>
-
-                        <br/>
-                        <center><h3>Payments</h3></center>
-                        <table  class="table table-lg">
-                            <thead><tr>
-                                <th>Name</th>
-                                <th style="text-align: right;">Total</th>
-                            </tr></thead>
-                            <tbody>
-                            <tr t-foreach="record['payments']" t-as='payment'>
-                                <td><t t-esc="payment['name']" /></td>
-                                <td style="text-align: right;"><t t-esc="payment['total']" t-options="{'widget': 'float', 'precision': currency_precision}"/></td>
-                            </tr>
-                            </tbody>
-                        </table>
-
-                        <br/>
-                        <br/>
-
+                            </t>
                         </t>
-                    </t>
+                    </table>
+
+
+
+
+
+
+                   
                 </div>
             </t>
-        </t>
-    </template>
-</data>
+            <!-- </t> -->
+        </template>
+    </data>
 </odoo>
