@@ -6,17 +6,29 @@
                <t t-call="web.basic_layout">
                     <div class="page" style="font-size: 15px">
 		                 <style type="text/css">
-		                table th, h4 {
+		               table th, h4 {
 		                background-color: #71639e;
                         padding: 5px;
                         color: #fff;
                         text-transform: uppercase;
 		                }
+                        h2{
+                            background: #71639e;
+                            color: #fff;
+                            padding: 5px;
+                        }
                         .page {
                                 width: 80%;
                                 margin-left: 10%;
-                                border: 4px #4ab332 solid;
+                                border: 4px #71639e solid;
                             }
+                            thead {
+                                background: #71639e;
+                                color: #fff;
+                            }
+                            td {
+                                    text-transform: capitalize;
+                                }
                         </style>
                         <div class="text-center">
                             <h2>Top Selling Categories</h2>

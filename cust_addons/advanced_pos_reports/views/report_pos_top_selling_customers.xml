@@ -13,11 +13,23 @@
                         color: #fff;
                         text-transform: uppercase;
 		                }
+                        h2{
+                            background: #71639e;
+                            color: #fff;
+                            padding: 5px;
+                        }
                         .page {
                                 width: 80%;
                                 margin-left: 10%;
-                                border: 4px #4ab332 solid;
+                                border: 4px #71639e solid;
                             }
+                            thead {
+                                background: #71639e;
+                                color: #fff;
+                            }
+                            td {
+                                    text-transform: capitalize;
+                                }
                         </style>
                         </style>
                         <div class="text-center">
