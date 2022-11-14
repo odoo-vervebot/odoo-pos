@@ -47,15 +47,14 @@ odoo.define('point_of_sale.ProductScreen', function (require) {
                 numpadMode: 'quantity',
                 // mobile_pane: this.props.mobile_pane || 'right',
             });
+            console.log("Reached to connect")
+            this._ConnectBarcodeDevice(true);
             if (intervalID != undefined || intervalID != null) {
                 clearInterval(intervalID);
-                console.log("this.state before : ", intervalID)
+                console.log("this.state before bjsjsjj: ", intervalID)
                 this._ConnectBarcodeDevice(true);
                 console.log("this.state after : ", intervalID)
             }
-
-            
-
 
             this.state.runStatus = true;
             // this._ConnectBarcodeDevice();

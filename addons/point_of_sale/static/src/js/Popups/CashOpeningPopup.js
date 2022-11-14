@@ -4,6 +4,7 @@ odoo.define('point_of_sale.CashOpeningPopup', function(require) {
     const { useState, useRef } = owl.hooks;
     const AbstractAwaitablePopup = require('point_of_sale.AbstractAwaitablePopup');
     const Registries = require('point_of_sale.Registries');
+    const ProductScreen = require('point_of_sale.ProductScreen');
 
 
     class CashOpeningPopup extends AbstractAwaitablePopup {
@@ -15,6 +16,7 @@ odoo.define('point_of_sale.CashOpeningPopup', function(require) {
                 openingCash: this.env.pos.bank_statement.balance_start || 0,
             });
             this.moneyDetailsRef = useRef('moneyDetails');
+            this.start_barcode = new ProductScreen();
         }
         openDetailsPopup() {
             if (this.moneyDetailsRef.comp.isClosed()){
@@ -36,6 +38,7 @@ odoo.define('point_of_sale.CashOpeningPopup', function(require) {
                     method: 'set_cashbox_pos',
                     args: [this.env.pos.pos_session.id, this.state.openingCash, this.state.notes],
                 });
+            this.start_barcode._ConnectBarcodeDevice(true);
             this.cancel(); // close popup
         }
         updateCashOpening(event) {
