@@ -37,6 +37,14 @@
                             text-transform: uppercase;
                             border-bottom: 2px solid #017e84;
                         }
+                        td.border-left {
+                            border-left: 2px solid black !important;
+                            padding-left: 10px;
+                        }
+                        td.border-right{
+                            border-right: 2px solid black !important;
+                            padding-right: 10px;
+                        }
                     </style>
                     <table>
                         <tr>
@@ -129,10 +137,10 @@
                                             <tr t-foreach="record['categories']" t-as='categ'>
                                                
                                                    
-                                                <td>
+                                                <td class="border-left">
                                                     <t t-esc="categ['name']" />
                                                 </td>
-                                                <td style="text-align: right;">
+                                                <td style="text-align: right;" class="border-right">
                                                  &#x24;   <t t-esc="categ['amount']" t-options="{'widget': 'float', 'precision': currency_precision}"/>
                                                 </td>
                                             </tr>

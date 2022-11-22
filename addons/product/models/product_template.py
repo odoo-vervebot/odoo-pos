@@ -148,6 +148,7 @@ class ProductTemplate(models.Model):
 
     product_tooltip = fields.Char(compute='_compute_product_tooltip')
 
+
     priority = fields.Selection([
         ('0', 'Normal'),
         ('1', 'Favorite'),
@@ -1345,3 +1346,13 @@ class ProductTemplate(models.Model):
             'label': _('Import Template for Products'),
             'template': '/product/static/xls/product_template.xls'
         }]
+
+
+class Product_custom_fileds(models.Model):
+    _inherit = "product.template"
+    brand = fields.Char('Brand Name')
+    publish = fields.Boolean('Publish')
+    size = fields.Char('Size')
+    types = fields.Char('Type')
+    visibility = fields.Char('Visibility')
+

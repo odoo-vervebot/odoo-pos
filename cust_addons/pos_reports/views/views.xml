@@ -1,0 +1,66 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="pos_reports.list">
+      <field name="name">pos_reports list</field>
+      <field name="model">pos_reports.pos_reports</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+-->
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="pos_reports.action_window">
+      <field name="name">pos_reports window</field>
+      <field name="res_model">pos_reports.pos_reports</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="pos_reports.action_server">
+      <field name="name">pos_reports server</field>
+      <field name="model_id" ref="model_pos_reports_pos_reports"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="pos_reports" id="pos_reports.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="pos_reports.menu_1" parent="pos_reports.menu_root"/>
+    <menuitem name="Menu 2" id="pos_reports.menu_2" parent="pos_reports.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="pos_reports.menu_1_list" parent="pos_reports.menu_1"
+              action="pos_reports.action_window"/>
+    <menuitem name="Server to list" id="pos_reports" parent="pos_reports.menu_2"
+              action="pos_reports.action_server"/>
+-->
+<!--      <menuitem name="DemoReport" id="pos_demo_report" parent="point_of_sale.menu_point_rep" sequence="1"/> -->
+      <record id="action_hello_world" model="ir.actions.client">
+      <field name="name">Tutorial Demo</field>
+      <field name="tag">hello_world.action</field>
+    </record>
+    <menuitem name="Hello World" id="hello_world_menu_root" action="action_hello_world"></menuitem>
+  </data>
+</odoo>

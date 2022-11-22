@@ -1,7 +1,8 @@
 <odoo>
     <data>
         <record id="action_pos_demo_report" model="ir.actions.client">
-            <field name="name">PosDemoReport</field>
+             <field name="name">Dashboard</field>
+             <field name="tag">pos_demo_report</field>
         </record>
 
         <menuitem name="DemoReport" id="pos_demo_report" parent="point_of_sale.menu_point_rep"

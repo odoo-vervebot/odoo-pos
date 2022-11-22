@@ -307,7 +307,7 @@ odoo.define('point_of_sale.ProductScreen', function (require) {
                         "Access-Control-Allow-Origin": "*",
                         "Content-Type": "application/json"
                     }
-                    await fetch("http://localhost:8055/barcode/COM2", {
+                    await fetch("http://localhost:8055/barcode/", {
                         method: "GET",
                         headers: headersList
                     }).then(function (response) {
@@ -533,7 +533,7 @@ odoo.define('point_of_sale.ProductScreen', function (require) {
                 "Access-Control-Allow-Origin": "*",
                 "Content-Type": "application/json"
             }
-            fetch("http://localhost:8055/barcode/stop/COM2", {
+            fetch("http://localhost:8055/barcode/stop/", {
                 method: "GET",
                 headers: headersList
             }).then(function (response) {

@@ -1412,9 +1412,15 @@ td {
     border-left: dashed 1px rgb(215,215,215);
     overflow-x: hidden;
     overflow-y: auto;
-    max-width: 512px;
+    width: 512px;
     margin-left: auto;
     margin-right: auto;
+    /*border: 4px dashed;*/
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    transform: translate(50%, -50%);
+    box-shadow: rgb(0 0 0 / 15%) 0px 5px 15px 0px;
 }
 .screen .full-content{
     position: absolute;
@@ -1755,10 +1761,14 @@ td {
 
 .pos .scale-screen .product-price{
     font-size: 25px;
-    margin: 16px;
+    /*margin: 16px;*/
+    margin: 16px 0 16px -46px;
     text-align: center;
     display: inline-block;
     width: 35%;
+    background: #6ec89b;
+    color: #fff;
+    padding: 5px 0px;
 }
 .pos .scale-screen .computed-price{
     font-size: 25px;
@@ -1775,6 +1785,7 @@ td {
     text-shadow: 0px 2px 0px rgb(210,210,210);
     box-shadow: 0px 2px 0px rgb(225,225,225) inset;
     float: right;
+    box-shadow: inset 0 0 10px;
 }
 .pos .scale-screen .buy-product{
     text-align: center;
@@ -1796,8 +1807,10 @@ td {
     font-size: 56px;
     border-radius: 3px;
     font-family: Inconsolata;
-    text-shadow: 0px 2px 0px rgb(210, 210, 210);
-    box-shadow: 0px 2px 0px rgb(225,225,225) inset;
+    /*text-shadow: 0px 2px 0px rgb(210, 210, 210);*/
+    /*box-shadow: 0px 2px 0px rgb(225,225,225) inset;*/
+    box-shadow: inset 0 0 10px;
+    background: rgb(209 209 209);
 }
 
 
@@ -3620,4 +3633,7 @@ td {
     color: rgb(197, 52, 0);
     text-align: left;
     padding-left: 5px;
+}
+h1.product-name {
+    text-transform: capitalize;
 }

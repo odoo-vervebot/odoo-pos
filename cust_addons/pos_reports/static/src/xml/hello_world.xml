@@ -1,0 +1,36 @@
+<!--?xml version="1.0" encoding="UTF-8"?-->
+<templates xml:space="preserve">
+  <div t-name="hello_world.ClientAction" class="hello-world">
+    tests
+    <h1>Products</h1>
+    <div>
+        <table id="example" t-on-load="displayPopup" class="display nowrap" style="width:100%">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>name</th>
+                <th>barcode</th>
+            </tr>
+        </thead>
+        <tbody>
+
+          <tr t-foreach="widget.info" t-as="product">
+            <td><t t-esc="product.id"/></td>
+
+               <td><t t-esc="product.name"/></td>
+              <td><t t-esc="product.barcode"/></td>
+          </tr>
+        </tbody>
+        </table>
+
+
+    </div>
+      <script>
+          function mydataTable() {
+            $('#example').DataTable( {dom: 'Qlfrtip'});
+            }
+      </script>
+
+  </div>
+
+</templates>

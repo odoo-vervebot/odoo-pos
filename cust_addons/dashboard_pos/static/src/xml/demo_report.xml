@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="demo_report_template" xml:space="preserve">
     <t t-name="PosDemoReport">
-        <div class="oh_dashboards">
+        <div class="oh_demo_report">
             <div class="container-fluid o_pos_demo_report">
             </div>
         </div>

@@ -2,6 +2,7 @@
 <templates id="template" xml:space="preserve">
 
     <t t-name="ScaleScreen" owl="1">
+
         <div class="scale-screen screen">
             <div class="screen-content">
                 <div class="top-content">
