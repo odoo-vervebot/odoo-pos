@@ -47,14 +47,14 @@
                                 </div>
                         </div>
 
-                        <div>
+                        <div style="display:none;">
                             <span class="label">
                             <p>Type</p>
                                 </span>
                             <br/>
                             <br/>
                             <br/>
-                            <div class="input-field">
+                            <div class="input-field"  >
                                     <select class="input-field"
                                             style="width: 380px; height: 40px;"
                                             t-model="state.inputType" t-ref="input-amount-ref">

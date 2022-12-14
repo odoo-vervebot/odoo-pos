@@ -247,6 +247,8 @@
 .pos .order .orderline.selected,
 .pos .clientlist-screen .client-list tr {
     background: #ffffff !important;
+    
+
 }
 .pos .clientlist-screen .client-details input, .pos .clientlist-screen .client-details select {
     border-radius: 0 !important;

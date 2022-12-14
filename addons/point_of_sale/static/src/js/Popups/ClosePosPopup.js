@@ -193,7 +193,10 @@ odoo.define('point_of_sale.ClosePosPopup', function(require) {
                 }
                 // window.location = '/pos/ui';
                 // this.showPopup('ClosePosPopup');
+                
                 this.closeSessionClicked = false;
+                
+                window.location.href = '/web/session/logout?redirect=/web/login';
             }
         }
         async handleClosingError(response) {

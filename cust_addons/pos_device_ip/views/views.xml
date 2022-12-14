@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="pos_config_view_form_inherit_pos_device_ip" model="ir.ui.view">
+
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+        <field name="arch" type="xml">
+        <xpath expr="//div[@id='payment_methods_new']" position="before">
+                <div class="col-12 col-lg-6 o_setting_box" id="api_url">
+                    <div class="o_setting_right_pane">
+                        <strong class="o_form_label">Device IP</strong>
+                        <div>
+                            <p>Your Device api url</p>
+                            <field name="api_url"/>
+                        </div>
+                    </div>
+                </div>
+        </xpath>
+        </field>
+    </record>
+
+</odoo>

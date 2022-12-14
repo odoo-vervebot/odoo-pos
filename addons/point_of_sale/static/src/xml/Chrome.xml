@@ -49,7 +49,50 @@
             </t>
 
             <div t-if="['LOADING', 'CLOSING'].includes(state.uiState)" class="loader" t-transition="swing">
-                <div class="loader-feedback">
+            
+            <style>
+            #loading {
+               position: absolute;
+                top: 50%;
+                left: 50%;
+                margin-top: -50px;
+                margin-left: -50px;
+                width: 500px;
+                height: 500px;
+                
+            }
+            h1 {
+                position: relative;
+                color: rgba(0, 0, 0, .3);
+                font-size: 20px
+            }
+            h1:before {
+                content: attr(data-text);
+                position: absolute;
+                overflow: hidden;
+                max-width: 7em;
+                white-space: nowrap;
+                color: #fff;
+                animation: loading 2s linear;
+            }
+            @keyframes loading {
+                0% {
+                    max-width: 0;
+                }
+            }
+            
+            </style>
+              <div id="loading">
+
+                <img src="http://127.0.0.1:5000/static/img/logo2.png" alt="vervebot pos loading"/>
+                <br/>
+                <h1 data-text="Vervebot POS Loading…">Vervebot POS Loading…</h1>
+            </div>
+            
+
+
+
+                <div class="loader-feedback" style="display:none;">
                     <h1 class="message">
                         <t t-esc="loading.message" />
                     </h1>

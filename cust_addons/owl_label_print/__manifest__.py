@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ["sale", "sale_management"],
 
     # always loaded
     'data': [
@@ -32,4 +32,13 @@
     'demo': [
         'demo/demo.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+             'owl_label_print/static/src/js/components/*.js',
+
+         ],
+        'web.assets_qweb': [
+            'owl_label_print/static/src/js/components/*.xml',
+        ],
+     }
 }

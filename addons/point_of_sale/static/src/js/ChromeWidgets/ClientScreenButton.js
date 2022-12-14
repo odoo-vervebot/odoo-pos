@@ -32,6 +32,7 @@ odoo.define('point_of_sale.ClientScreenButton', function(require) {
             this.env.pos.customer_display = window.open('', 'Customer Display', 'height=600,width=900');
             const renderedHtml = await this.env.pos.render_html_for_customer_facing_display();
             var $renderedHtml = $('<div>').html(renderedHtml);
+            console.log($renderedHtml);
             $(this.env.pos.customer_display.document.body).html($renderedHtml.find('.pos-customer_facing_display'));
             $(this.env.pos.customer_display.document.head).html($renderedHtml.find('.resources').html());
         }

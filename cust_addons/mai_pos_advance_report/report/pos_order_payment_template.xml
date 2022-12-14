@@ -6,7 +6,7 @@
 				<div class="page" style="font-size: 15px">
 		            <style type="text/css">
 		                table th, h4 {
-		                background-color: gray;
+		                	background-color: #71639e;
 		                }
 		            </style>
 					<div class="header">
@@ -80,7 +80,7 @@
 							<td class="text-right"><span t-esc="line_total" /></td>
 						</tr>
 						<tr>
-							<td style="background-color: gray;" class="text-center" colspan="8"><b>TOTAL</b></td>
+							<td style="background-color: #71639e;" class="text-center" colspan="8"><b>TOTAL</b></td>
 							<t t-foreach="get_payment_method_total" t-as="p_id">
 								<td class="text-right" t-esc="p_id" t-options='{"widget": "float", "decimal_precision": "Product Price"}'/>
 							</t>
@@ -89,7 +89,7 @@
 				</table>
 				<table style="width:40%;font-size: 13px;" class="table table-sm o_main_table table-bordered">
 					<thead>
-						<th class="text-center" style="background-color: gray;" colspan="2">PAYMENT DETAILS</th>
+						<th class="text-center" style="background-color: #71639e;" colspan="2">PAYMENT DETAILS</th>
 					</thead>
 					<tbody>
 						<t t-set="total" t-value="0"/>
@@ -101,7 +101,7 @@
 							</tr>
 						</t>
 						<tr>
-							<td width='20%' style="background-color: gray;" class="text-center">Total</td>
+							<td width='20%' style="background-color: #71639e;" class="text-center">Total</td>
 							<td width='20%' class="text-center"><span t-esc="total"  t-options='{"widget": "float", "decimal_precision": "Product Price"}'/></td>
 						</tr>
 					</tbody>

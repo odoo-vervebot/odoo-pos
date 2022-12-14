@@ -44,6 +44,6 @@ package.json
 /man/
 /share/
 /src/
-
+/backups/
 # avoid adding it after generation from tsconfig command
 tsconfig.json

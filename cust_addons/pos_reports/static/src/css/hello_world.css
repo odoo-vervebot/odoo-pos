@@ -1,3 +1,14 @@
+tr.danger {
+  font-weight: bold;
+}
+
+.remove:hover {
+  font-weight: bold;
+}
+.remove {
+  cursor: pointer;
+}
+
 
 /*table {*/
 /*  font-family: arial, sans-serif;*/
@@ -15,12 +26,13 @@
 /*  background-color: #dddddd;*/
 /*}*/
 
-.old {
-        color: red;
-    }
-    .middleaged {
-        color: blue;
-    }
-    .young {
-        color: green;
-    }
+/*.old {*/
+/*        color: red;*/
+/*    }*/
+/*    .middleaged {*/
+/*        color: blue;*/
+/*    }*/
+/*    .young {*/
+/*        color: green;*/
+/*    }*/
+

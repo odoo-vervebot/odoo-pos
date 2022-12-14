@@ -333,6 +333,8 @@ exports.PosModel = Backbone.Model.extend({
         domain: function(self){ return [['id','=', self.config_id]]; },
         loaded: function(self,configs){
             self.config = configs[0];
+            // console.log("self config ==================");
+            // console.log(self.config);
             self.config.use_proxy = self.config.is_posbox && (
                                     self.config.iface_electronic_scale ||
                                     self.config.iface_print_via_proxy  ||
@@ -343,7 +345,7 @@ exports.PosModel = Backbone.Model.extend({
             self.set_cashier(self.get_cashier());
             // We need to do it here, since only then the local storage has the correct uuid
             self.db.save('pos_session_id', self.pos_session.id);
-
+            self.db.set_api_url(self.config.api_url);
             var orders = self.db.get_orders();
             for (var i = 0; i < orders.length; i++) {
                 self.pos_session.sequence_number = Math.max(self.pos_session.sequence_number, orders[i].data.sequence_number+1);
@@ -839,6 +841,11 @@ exports.PosModel = Backbone.Model.extend({
     set_cashier: function(employee){
         this.set('cashier', employee);
         this.db.set_cashier(this.get('cashier'));
+    },
+    // changes the current api_url
+    set_api_url: function(api_url){
+        this.set('api_url', api_url);
+        this.db.set_api_url(this.get('api_url'));
     },
     // creates a new empty order and sets it as the current order
     add_new_order: function(options){

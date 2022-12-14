@@ -145,6 +145,7 @@ var PosDB = core.Class.extend({
         var data = localStorage[this.name + '_' + store];
         if(data !== undefined && data !== ""){
             data = JSON.parse(data);
+
             this.cache[store] = data;
             return data;
         }else{
@@ -561,6 +562,13 @@ var PosDB = core.Class.extend({
     },
     get_cashier: function() {
         return this.load('cashier');
+    },
+    set_api_url: function(api_url) {
+        // Always update if the user is the same as before
+        this.save('api_url', api_url || null);
+    },
+    get_device_ip: function() {
+        return this.load('api_url');
     }
 });
 

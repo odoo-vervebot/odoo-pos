@@ -6,7 +6,7 @@
 				<div class="page" style="font-size: 15px">
 		            <style type="text/css">
 		                table th, h4 {
-		                background-color: gray;
+		                background-color: #71639e;
 		                }
 		            </style>
 					<div class="header">
@@ -91,7 +91,7 @@
 							<td class="text-right"><span t-esc="line.get('gross_profit')" t-options='{"widget": "float", "decimal_precision": "Product Price"}'/></td>
 						</tr>
 						<tr>
-							<td style="background-color: gray;" class="text-center" colspan="4"><b>GRAND TOTAL</b></td>
+							<td style="background-color: #71639e;" class="text-center" colspan="4"><b>GRAND TOTAL</b></td>
 							<td class="text-right"><strong><span t-esc="total_qty" t-options='{"widget": "float", "decimal_precision": "Product Price"}'/></strong></td>
 							<td class="text-right"><strong><span t-esc="total_sale" t-options='{"widget": "float", "decimal_precision": "Product Price"}'/></strong></td>
 							<td class="text-right"><strong><span t-esc="total_sale_amount" t-options='{"widget": "float", "decimal_precision": "Product Price"}'/></strong></td>

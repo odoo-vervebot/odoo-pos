@@ -122,8 +122,8 @@ odoo.define('point_of_sale.ScaleScreen', function(require) {
                     //     method: "POST",
                     // body: bodyContent,
 
-                    
-                    await fetch("http://localhost:8055/", {
+                    let device_url = this.env.pos.db.get_device_ip();
+                    await fetch(device_url, {
                         method: "GET",                   
                         headers: headersList
                     }).then(function (response) {
@@ -132,15 +132,17 @@ odoo.define('point_of_sale.ScaleScreen', function(require) {
                         console.log("data : ", data);
                         console.log(JSON.parse(data));
                         let tempWeightData = JSON.parse(data).weight
-                        console.log("data from API");
-                        if(!isNaN(parseFloat(tempWeightData))) {
-                            // is float    
+                        if (tempWeightData.includes(' lb.'))
+                        {
+                            console.log("data from API");
+                            if(!isNaN(parseFloat(tempWeightData.split(' ')[0]))) {
+                                // is float    
                             console.log(parseFloat(tempWeightData));
-                        console.log(Number(tempWeightData));
-                        // this.state.weightInput=tempWeightData;
-                        tempWeight = parseFloat(tempWeightData);
+                            console.log(Number(tempWeightData));
+                            // this.state.weightInput=tempWeightData;
+                            tempWeight = parseFloat(tempWeightData);
 
-                        console.log("inner_tempWeight : ", tempWeight);
+                            console.log("inner_tempWeight : ", tempWeight);
                         }
                         else{
                             
@@ -150,7 +152,7 @@ odoo.define('point_of_sale.ScaleScreen', function(require) {
                             }
                             
                         }
-                        
+                    }
                     })
 
 
@@ -172,7 +174,7 @@ odoo.define('point_of_sale.ScaleScreen', function(require) {
             // if (this.state.weightScreen) {
                 // setInterval(fetchWeightFromServer, 400)
                 clearInterval(weight_scale_refreshId);
-                weight_scale_refreshId = setInterval(fetchWeightFromServer, 2000)
+                weight_scale_refreshId = setInterval(fetchWeightFromServer, 200)
                 // this.state.refreshIntervalId = setInterval(fetchWeightFromServer, 400)
                 // console.log("this.state.refreshIntervalId : ", this.state.refreshIntervalId)
             // } else {

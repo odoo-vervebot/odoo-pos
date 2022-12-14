@@ -179,6 +179,49 @@ odoo.define('point_of_sale.PaymentScreen', function (require) {
                 }
                 await this._finalizeValidation();
             }
+            // this._exportUnpaidOrders();
+            let unpaid_key = null
+            for (var key in localStorage){
+                let str = key;
+                let target = "_unpaid_orders";
+                var last  = str.substring(str.length-(target.length));
+                if (last == target ){
+                    unpaid_key = str;
+                }
+                // console.log(key)
+             }
+
+            let product_data = localStorage.getItem(unpaid_key)
+            // console.log("product_data ", product_data)
+            let json_data = JSON.parse(product_data)
+
+            let os = json_data[{}]
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            
+            var raw = JSON.stringify({
+            'data': os
+            });
+
+            var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+            };
+
+            fetch("http://127.0.0.1:5000/product/", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+        }
+
+        _exportUnpaidOrders(){
+            // get cart item from local storage
+            // process
+            // post   
+           
+
         }
         async _finalizeValidation() {
             if ((this.currentOrder.is_paid_with_cash() || this.currentOrder.get_change()) && this.env.pos.config.iface_cashdrawer) {

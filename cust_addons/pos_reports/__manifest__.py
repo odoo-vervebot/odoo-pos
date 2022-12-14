@@ -35,6 +35,7 @@
     'assets': {
         'web.assets_backend': [
              'pos_reports/static/src/js/hello_world.js',
+             # 'pos_reports/static/src/js/owl_example.js',
              'https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js',
              'https://cdn.datatables.net/searchbuilder/1.4.0/js/dataTables.searchBuilder.min.js',
              'https://cdn.datatables.net/datetime/1.2.0/js/dataTables.dateTime.min.js',
@@ -46,6 +47,7 @@
          ],
         'web.assets_qweb': [
             'pos_reports/static/src/xml/hello_world.xml',
+            # 'pos_reports/static/src/xml/owl_example.xml',
         ],
      }
 }

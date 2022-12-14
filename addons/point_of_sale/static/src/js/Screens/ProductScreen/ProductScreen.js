@@ -48,6 +48,7 @@ odoo.define('point_of_sale.ProductScreen', function (require) {
                 // mobile_pane: this.props.mobile_pane || 'right',
             });
             console.log("Reached to connect")
+            
             this._ConnectBarcodeDevice(true);
             if (intervalID != undefined || intervalID != null) {
                 clearInterval(intervalID);
@@ -57,6 +58,7 @@ odoo.define('point_of_sale.ProductScreen', function (require) {
             }
 
             this.state.runStatus = true;
+            // this.controll_looop();
             // this._ConnectBarcodeDevice();
             // this._onLoad();
         }
@@ -174,17 +176,22 @@ odoo.define('point_of_sale.ProductScreen', function (require) {
             //         await this._onScaleNotAvailable();
             //     }
             // }
-            console.log(product.to)
+            console.log(product.to_weight)
             if (product.to_weight) {
                 // Show the ScaleScreen to weigh the product.
-                this._stopcustomBarcodeScanner();
+                // this._stopcustomBarcodeScanner();
+                
+
+                
 
                 if (this.isScaleAvailable) {
                     let clickonproduct = true;
+                    // alert("Weight available");
+                    console.log("weight product clicked2 ", this.isScaleAvailable);
                     const { confirmed, payload } = await this.showTempScreen('ScaleScreen', {
                         product, clickonproduct
                     });
-
+                    
                     console.log("confirmed : ", confirmed)
                     console.log("payload : ", payload)
 
@@ -211,21 +218,29 @@ odoo.define('point_of_sale.ProductScreen', function (require) {
 
         }
         async _clickProduct(event) {
-            console.log("_clickProduct")
-            console.log("this.currentOrder : ", this.currentOrder)
-            console.log("this.env.pos : ", this.env.pos)
-            console.log("event.detail : ", event.detail)
+            // console.log("_clickProduct")
+            // console.log("this.currentOrder : ", this.currentOrder)
+            // console.log("this.env.pos : ", this.env.pos)
+            // console.log("event.detail : ", event.detail)
 
             if (!this.currentOrder) {
                 this.env.pos.add_new_order();
             }
             const product = event.detail;
+            // console.log("product =====================", product);
+            // console.log("product =====================", product.cid);
+            // console.log("product =====================", product.image_base64);
+            // console.log("product =====================", product.invoice_policy);
+
             const options = await this._getAddProductOptions(product);
             // Do not add product if options is undefined.
             if (!options) return;
             // Add the product after having the extra information.
             this.currentOrder.add_product(product, options);
             NumberBuffer.reset();
+            this._exportUnpaidOrders();
+            // controll_looop();
+            
         }
         _setNumpadMode(event) {
             const { mode } = event.detail;
@@ -262,10 +277,12 @@ odoo.define('point_of_sale.ProductScreen', function (require) {
             if (this.env.pos.config.iface_customer_facing_display) {
                 this.env.pos.send_current_order_to_customer_facing_display();
             }
+            this._exportUnpaidOrders();
         }
         async _newOrderlineSelected() {
             NumberBuffer.reset();
             this.state.numpadMode = 'quantity';
+            this._exportUnpaidOrders();
         }
         _setValue(val) {
             if (this.currentOrder.get_selected_orderline()) {
@@ -280,9 +297,48 @@ odoo.define('point_of_sale.ProductScreen', function (require) {
                     selected_orderline.set_unit_price(val);
                 }
             }
+            this._exportUnpaidOrders();
         }
 
+        _exportUnpaidOrders(){
+            // get cart item from local storage
+            // process
+            // post   
+            let unpaid_key = null
+            for (var key in localStorage){
+                let str = key;
+                let target = "_unpaid_orders";
+                var last  = str.substring(str.length-(target.length));
+                if (last == target ){
+                    unpaid_key = str;
+                }
+                // console.log(key)
+             }
 
+            let product_data = localStorage.getItem(unpaid_key)
+            // console.log("product_data ", product_data)
+            let json_data = JSON.parse(product_data)
+            let os = json_data[0].data
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            
+            var raw = JSON.stringify({
+            'data': os
+            });
+
+            var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+            };
+
+            fetch("http://127.0.0.1:5000/product/", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+
+        }
 
         async _ConnectBarcodeDevice(runningStatus) {
             // Sample Barcode 689462000270\
@@ -291,15 +347,16 @@ odoo.define('point_of_sale.ProductScreen', function (require) {
             var last_scanned_code = "";
             var last_scanned_time = Date.now();
             var code = '';
+            var server_status = true;
             var oo = 1;
-
+           
             // this.state.runStatus = runningStatus;
             // var Controlll = runningStatus
-
+            
             const fetchBarcodeFromServer = async () => {
-                // console.log("intervalID type", typeof intervalID)
+                console.log("intervalID type", typeof intervalID)
                 // if (this.Controlll===1) {
-                if (intervalID != null) {
+                if (intervalID == null) {
                     let headersList = {
                         "Accept": "*/*",
                         "Access-Control-Allow-Headers": "*",
@@ -307,7 +364,13 @@ odoo.define('point_of_sale.ProductScreen', function (require) {
                         "Access-Control-Allow-Origin": "*",
                         "Content-Type": "application/json"
                     }
-                    await fetch("http://localhost:8055/barcode/", {
+                    //check url
+                    // let device_url = self.env.cr.execute('SELECT COUNT(*) FROM pos_config WHERE pax_endpoint != \'\' AND pax_endpoint IS NOT NULL')
+                    let device_url = "http://127.0.0.1:5027/barcode/";
+                    // let device_url = this.env.pos.db.get_device_ip()+"/barcode/";
+                    console.log(device_url)
+                    // alert(device_url)
+                    await fetch(device_url, {
                         method: "GET",
                         headers: headersList
                     }).then(function (response) {
@@ -315,14 +378,17 @@ odoo.define('point_of_sale.ProductScreen', function (require) {
                     }).then(function (data) {
                         // console.log("data : ", data);
                         console.log(JSON.parse(data));
+                        console.log("server_status", server_status)
                         code = JSON.parse(data).barcode;
                     }).catch((error) => {
                         // console.error('Error:', error);
                         console.log("server is down!!")
+                        server_status = false
                     });
                     console.log("last_scanned_code : ", last_scanned_code);
-                    if (code != '' && code != last_scanned_code) {
-                        // console.log("code : ", code);
+                    // if (code != '' && code != last_scanned_code) {
+                    if (code != '') {
+                        console.log("code : ", code);
 
                         let product = this.env.pos.db.get_product_by_barcode(code);
                         if (product) {
@@ -337,15 +403,20 @@ odoo.define('point_of_sale.ProductScreen', function (require) {
                             if (!options) return;
                             this.currentOrder.add_product(product, options);
                             NumberBuffer.reset();
+                            code='';
+                            // alert("called api again");
+                            controll_looop();
                         }
                         else{
+                            controll_looop();
                             console.log("product not found")
                         }
-                        last_scanned_code = code;
-                        last_scanned_time = Date.now();
+                        // last_scanned_code = code;
+                        // last_scanned_time = Date.now();
 
                     }
                     else {
+                        // controll_looop();
                         last_scanned_code = '';
                     }
 
@@ -357,24 +428,32 @@ odoo.define('point_of_sale.ProductScreen', function (require) {
 
                     // console.log("this.state.runStatus : ", this.state.runStatus)
                     // this.state.refreshIntervalId = setInterval(fetchBarcodeFromServer, 400)
+                    // alert("control loop started");
                     fetchBarcodeFromServer();
 
 
                 }
                 else {
+                    // alert("gisugfius")
                     clearInterval(this.state.refreshIntervalId);
+                    fetchBarcodeFromServer();
                     // this.state.runStatus = false;
-                    console.log("this.state.runStatus : ", this.state.runStatus)
+                    console.log("this.state.runStatus : ", this.state.runStatus);
                     // console.log("running status", this._ConnectBarcodeDevice_stop)
                 }
 
             }
             if (intervalID == null) {
-                intervalID = setInterval(controll_looop, 2000)
+
+                // alert("5454644")
+                controll_looop();
+                // intervalID = setInterval(controll_looop, 2000)
             }
             else {
+                // alert("dsdsds")
                 clearInterval(intervalID);
-                intervalID = setInterval(controll_looop, 2000)
+                // controll_looop;
+                // intervalID = setInterval(controll_looop, 2000)
             }
 
 
@@ -533,11 +612,14 @@ odoo.define('point_of_sale.ProductScreen', function (require) {
                 "Access-Control-Allow-Origin": "*",
                 "Content-Type": "application/json"
             }
-            fetch("http://localhost:8055/barcode/stop/", {
+            let device_url = this.env.pos.db.get_device_ip()+"/barcode/stop/";
+            fetch(device_url, {
                 method: "GET",
                 headers: headersList
             }).then(function (response) {
-                return response.text();
+                console.log("response ====== from server")
+                return response
+                // return response.text();
             });
         }
         async _onClickCustomer() {

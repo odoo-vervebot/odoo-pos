@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+         <record id="action_hello_world" model="ir.actions.client">
+          <field name="name">Tutorial Demo</field>
+          <field name="tag">hello_world.action</field>
+        </record>
+
+        <menuitem id="tutorial_javascript_root"
+            name="Tutorial Javascript"
+            web_icon="tutorial_javascript,static/description/icon.png" />
+
+
+        <menuitem id="tutorial_javascript_menu"
+            name="Tutorial Javascript"
+            parent="tutorial_javascript_root"
+            action="action_hello_world" />
+    </data>
+</odoo>

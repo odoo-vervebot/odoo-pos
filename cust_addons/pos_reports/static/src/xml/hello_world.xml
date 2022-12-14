@@ -4,7 +4,9 @@
     tests
     <h1>Products</h1>
     <div>
-        <table id="example" t-on-load="displayPopup" class="display nowrap" style="width:100%">
+
+
+        <table id="example"  class="display nowrap" style="width:100%">
         <thead>
             <tr>
                 <th>Id</th>
@@ -20,16 +22,17 @@
                <td><t t-esc="product.name"/></td>
               <td><t t-esc="product.barcode"/></td>
           </tr>
+
         </tbody>
         </table>
 
 
     </div>
-      <script>
-          function mydataTable() {
-            $('#example').DataTable( {dom: 'Qlfrtip'});
-            }
-      </script>
+{#      <script>#}
+{#          function mydataTable() {#}
+{#            $('#example').DataTable( {dom: 'Qlfrtip'});#}
+{#            }#}
+{#      </script>#}
 
   </div>
 

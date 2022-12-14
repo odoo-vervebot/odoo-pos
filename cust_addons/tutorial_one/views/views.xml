@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="tutorial_one.list">
+      <field name="name">tutorialOne list</field>
+      <field name="model">tutorial_one.tutorial_one</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+-->
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="tutorial_one.action_window">
+      <field name="name">tutorialOne window</field>
+      <field name="res_model">tutorial_one.tutorial_one</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="tutorial_one.action_server">
+      <field name="name">tutorialOne server</field>
+      <field name="model_id" ref="model_tutorial_one_tutorial_one"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="tutorialOne" id="tutorial_one.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="tutorial_one.menu_1" parent="tutorial_one.menu_root"/>
+    <menuitem name="Menu 2" id="tutorial_one.menu_2" parent="tutorial_one.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="tutorial_one.menu_1_list" parent="tutorial_one.menu_1"
+              action="tutorial_one.action_window"/>
+    <menuitem name="Server to list" id="tutorial_one" parent="tutorial_one.menu_2"
+              action="tutorial_one.action_server"/>
+-->
+  </data>
+</odoo>

@@ -78,7 +78,9 @@ odoo.define('point_of_sale.ReceiptScreen', function (require) {
              * any error that can happen during the printing does not affect the rendering.
              */
             async handleAutoPrint() {
+                console.log("auto printing detected=========")
                 if (this._shouldAutoPrint()) {
+                    console.log("in process =============")
                     await this.printReceipt();
                     if (this.currentOrder._printed && this._shouldCloseImmediately()) {
                         this.whenClosing();

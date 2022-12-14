@@ -51,10 +51,12 @@ odoo.define('create_pos_product.CustomListScreen', function(require) {
                 body: this.env._t('Add New Product'),
             });
             if (confirmed) {
+                // alert(payload[3]);
                 var product_category = payload[0];
                 var product_name = payload[1];
                 var product_price = payload[2];
-                var product_type = payload[3];
+                var product_type = "consumable";
+                // var product_type = payload[3];
                 var product_uom = payload[4];
                 var product_barcode = payload[5];
                 ajax.jsonRpc('/Add_Product', 'call', {

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+
+    <t t-name="WidgetOneTemplate">
+        <div>
+            <t t-if="widget.mode == 'edit' ">
+                <p>This is the widget view in edit mode (the user is editing the document)</p>
+            </t>
+            <t t-if="widget.mode == 'readonly' ">
+                <p>This is the widget view in readonly mode (the user only sees the document)</p>
+            </t>
+        </div>
+
+         <table id="example"  class="display nowrap" style="width:100%">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>name</th>
+                <th>barcode</th>
+            </tr>
+        </thead>
+        <tbody>
+
+          <tr t-foreach="widget.info" t-as="product">
+            <td><t t-esc="product.id"/></td>
+
+               <td><t t-esc="product.name"/></td>
+              <td><t t-esc="product.barcode"/></td>
+          </tr>
+        </tbody>
+        </table>
+    </t>
+
+</template>

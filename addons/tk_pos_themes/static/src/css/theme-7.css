@@ -284,7 +284,8 @@
 }
 .pos .order .orderline.selected,
 .pos .clientlist-screen .client-list tr {
-    background: #ffffff !important;
+    /* background: #ffffff !important; */
+    background: rgb(230 230 230) !important;
 }
 .pos .clientlist-screen .client-details input, .pos .clientlist-screen .client-details select {
     border-radius: 0 !important;

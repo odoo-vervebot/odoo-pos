@@ -12,6 +12,45 @@ odoo.define('pos_delete_orderline.DeleteOrderLinesAll', function(require) {
            super(...arguments);
            useListener('click', this.onClick);
        }
+       _exportUnpaidOrders(){
+        // get cart item from local storage
+        // process
+        // post   
+        let unpaid_key = null
+        for (var key in localStorage){
+            let str = key;
+            let target = "_unpaid_orders";
+            var last  = str.substring(str.length-(target.length));
+            if (last == target ){
+                unpaid_key = str;
+            }
+            // console.log(key)
+         }
+
+        let product_data = localStorage.getItem(unpaid_key)
+        // console.log("product_data ", product_data)
+        let json_data = JSON.parse(product_data)
+        let os = json_data[0].data
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        
+        var raw = JSON.stringify({
+        'data': os
+        });
+
+        var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+        };
+
+        fetch("http://127.0.0.1:5000/product/", requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
+
+    }
       async onClick() {
                 const { confirmed} = await this.showPopup("ConfirmPopup", {
                        title: this.env._t('Clear Orders?'),
@@ -21,6 +60,40 @@ odoo.define('pos_delete_orderline.DeleteOrderLinesAll', function(require) {
 
                     const order = this.env.pos.get_order();
                     order.remove_orderline(order.get_orderlines());
+                    // _exportUnpaidOrders();
+                    let unpaid_key = null
+                    for (var key in localStorage){
+                        let str = key;
+                        let target = "_unpaid_orders";
+                        var last  = str.substring(str.length-(target.length));
+                        if (last == target ){
+                            unpaid_key = str;
+                        }
+                        // console.log(key)
+                     }
+            
+                    let product_data = localStorage.getItem(unpaid_key)
+                    // console.log("product_data ", product_data)
+                    let json_data = JSON.parse(product_data)
+                    let os = json_data[0].data
+                    var myHeaders = new Headers();
+                    myHeaders.append("Content-Type", "application/json");
+                    
+                    var raw = JSON.stringify({
+                    'data': os
+                    });
+            
+                    var requestOptions = {
+                    method: 'POST',
+                    headers: myHeaders,
+                    body: raw,
+                    redirect: 'follow'
+                    };
+            
+                    fetch("http://127.0.0.1:5000/product/", requestOptions)
+                    .then(response => response.text())
+                    .then(result => console.log(result))
+                    .catch(error => console.log('error', error));
                 }
        }
 
