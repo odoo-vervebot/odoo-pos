@@ -157,11 +157,12 @@ odoo.define('pos_pax.PAXPaymentScreen', function (require) {
                 paymentHeaders.append("Idempotency-Key", "d68fd10a-14af-4bd8-b25d-7cc8dc972512");
                 paymentHeaders.append("Content-Type", "application/json");
                 paymentHeaders.append("Authorization", "Bearer e633a51a-2cd2-608e-15d2-d374176e449a");
-
+                console.log("amount  ", purchase_amount * 100)
+                console.log("externalPaymentId  ", order.uid)
                 var raw = JSON.stringify({
-                "amount": 5100,
+                "amount": purchase_amount * 100,
                 "final": true,
-                "externalPaymentId": "42-443-645-6323"
+                "externalPaymentId": order.uid
                 });
 
                 var paymentrequestOptions = {
