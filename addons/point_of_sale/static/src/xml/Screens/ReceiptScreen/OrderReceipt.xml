@@ -117,7 +117,7 @@
                 <div>
                     Total Taxes
                     <span t-esc="env.pos.format_currency(receipt.total_tax)" class="pos-receipt-right-align"/>
-                </div>
+                </div> 
             </t>
 
             <div class="before-footer" />
@@ -146,7 +146,7 @@
             </div>
 
             <br/>
-            <div class="pos-receipt-order-data">
+            <div class="pos-receipt-order-data" >
                 <div><t t-esc="receipt.name" /></div>
                 <t t-if="receipt.date.localestring">
                     <div><t t-esc="receipt.date.localestring" /></div>
@@ -154,7 +154,30 @@
                 <t t-else="">
                     <div><t t-esc="receipt.date.validation_date" /></div>
                 </t>
+                
+            
             </div>
+
+            
+         <br/>
+            <div class="pos-receipt-order-data" >
+                <div>
+                
+                    Thanks For Ordering. Have A Nice Day!
+                
+                </div>
+
+
+                <t t-if="receipt.date.localestring">
+                    <div>-------------</div>
+                </t>
+                <t t-else="">
+                    <div>------------</div>
+                </t>
+                
+            
+            </div>
+            
         </div>
     </t>
     <t t-name="OrderLinesReceipt" owl="1">

@@ -27,9 +27,9 @@ odoo.define('pos_pax.PAXPaymentTransactionPopup', function(require) {
     }
     PAXPaymentTransactionPopup.template = 'PAXPaymentTransactionPopup';
     PAXPaymentTransactionPopup.defaultProps = {
-        confirmText: 'Ok',
+        confirmText: 'Retry',
         cancelText: 'Cancel',
-        title: 'PAX Online Payment',
+        title: 'Clover Online Payment',
         body: '',
     };
 

@@ -9,14 +9,55 @@
         <xpath expr="//div[@id='payment_methods_new']" position="before">
                 <div class="col-12 col-lg-6 o_setting_box" id="api_url">
                     <div class="o_setting_right_pane">
-                        <strong class="o_form_label">Device IP</strong>
+                        <strong class="o_form_label">Barcode Device IP</strong>
                         <div>
-                            <p>Your Device api url</p>
+                            <p>Barcode Device api url</p>
                             <field name="api_url"/>
                         </div>
                     </div>
                 </div>
+                <div class="col-12 col-lg-6 o_setting_box" id="scale_url">
+                    <div class="o_setting_right_pane">
+                        <strong class="o_form_label">Weight Scale Device IP</strong>
+                        <div>
+                            <p>Weight Scale Device api url</p>
+                            <field name="scale_url"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 o_setting_box" id="customer_screen_url">
+                    <div class="o_setting_right_pane">
+                        <strong class="o_form_label">Customer Screen IP</strong>
+                        <div>
+                            <p>Customer Screen url</p>
+                            <field name="customer_screen_url"/>
+                        </div>
+                    </div>
+                </div>
         </xpath>
+       <!--  <xpath expr="//div[@id='payment_methods_new']" position="before">
+                <div class="col-12 col-lg-6 o_setting_box" id="scale_url">
+                    <div class="o_setting_right_pane">
+                        <strong class="o_form_label">Weight Scale Device IP</strong>
+                        <div>
+                            <p>Weight Scale Device api url</p>
+                            <field name="scale_url"/>
+                        </div>
+                    </div>
+                </div>
+        </xpath>
+         <xpath expr="//div[@id='payment_methods_new']" position="before">
+                <div class="col-12 col-lg-6 o_setting_box" id="customer_screen_url">
+                    <div class="o_setting_right_pane">
+                        <strong class="o_form_label">Customer Screen IP</strong>
+                        <div>
+                            <p>Customer Screen url</p>
+                            <field name="customer_screen_url"/>
+                        </div>
+                    </div>
+                </div>
+        </xpath>
+        --> 
         </field>
     </record>
 

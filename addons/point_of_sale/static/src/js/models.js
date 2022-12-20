@@ -346,6 +346,8 @@ exports.PosModel = Backbone.Model.extend({
             // We need to do it here, since only then the local storage has the correct uuid
             self.db.save('pos_session_id', self.pos_session.id);
             self.db.set_api_url(self.config.api_url);
+            self.db.set_scale_url(self.config.scale_url);
+            self.db.set_customer_screen_url(self.config.customer_screen_url);
             var orders = self.db.get_orders();
             for (var i = 0; i < orders.length; i++) {
                 self.pos_session.sequence_number = Math.max(self.pos_session.sequence_number, orders[i].data.sequence_number+1);
@@ -846,6 +848,14 @@ exports.PosModel = Backbone.Model.extend({
     set_api_url: function(api_url){
         this.set('api_url', api_url);
         this.db.set_api_url(this.get('api_url'));
+    },
+    set_scale_url: function(scale_url){
+        this.set('scale_url', scale_url);
+        this.db.set_scale_url(this.get('scale_url'));
+    },
+    set_customer_screen_url: function(customer_screen_url){
+        this.set('customer_screen_url', customer_screen_url);
+        this.db.set_customer_screen_url(this.get('customer_screen_url'));
     },
     // creates a new empty order and sets it as the current order
     add_new_order: function(options){
@@ -3349,12 +3359,14 @@ exports.Order = Backbone.Model.extend({
             this.paymentlines.add(newPaymentline);
             this.select_paymentline(newPaymentline);
             if(this.pos.config.cash_rounding){
+                
               this.selected_paymentline.set_amount(0);
               this.selected_paymentline.set_amount(this.get_due());
             }
 
             if (payment_method.payment_terminal) {
                 newPaymentline.set_payment_status('pending');
+                
             }
             return newPaymentline;
         }
@@ -3394,6 +3406,7 @@ exports.Order = Backbone.Model.extend({
     },
     select_paymentline: function(line){
         if(line !== this.selected_paymentline){
+            
             if(this.selected_paymentline){
                 this.selected_paymentline.set_selected(false);
             }

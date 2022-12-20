@@ -1,18 +1,18 @@
-# Part of Hibou Suite Professional. See LICENSE_PROFESSIONAL file for full copyright and licensing details.
+# Clover Rest API payment. See LICENSE_PROFESSIONAL file for full copyright and licensing details.
 
 {
-    'name': 'POS PAX Terminal Credit Card',
-    'author': 'Hibou Corp. <hello@hibou.io>',
+    'name': 'Clover Payment',
+    'author': 'vervebot <info@vervebot.io>',
     'version': '15.0.1.0.0',
     'category': 'Point of Sale',
     'sequence': 6,
-    'summary': 'PAX Terminal Credit card support for Point Of Sale',
+    'summary': 'Clover payment for Point Of Sale',
     'description': """
-Allow credit card POS payments
+Allow Clover Rest API payments
 ==============================
 
-This module allows customers to pay for their orders with credit cards. 
-The transactions are processed on the PAX Terminal (no credit credit card 
+This module allows customers to pay for their orders with clover device. 
+The transactions are processed on the clover device (no credit credit card 
 information through Odoo itself). 
 
 Depending on Device and processor support, this integration can handle:
@@ -24,9 +24,9 @@ Depending on Device and processor support, this integration can handle:
     """,
     'depends': [
         'pos_sale',
-        'hibou_professional',
+        
     ],
-    'website': 'https://hibou.io',
+    'website': 'https://vervebot.io',
     'data': [
         'views/pos_config_setting_views.xml',
         'views/pos_pax_views.xml',

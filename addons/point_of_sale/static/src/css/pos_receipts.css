@@ -32,6 +32,7 @@
 .pos-receipt .pos-receipt-contact {
     text-align: center;
     font-size: 75%;
+    padding-bottom: 20%;
 }
 
 .pos-receipt .pos-receipt-order-data {

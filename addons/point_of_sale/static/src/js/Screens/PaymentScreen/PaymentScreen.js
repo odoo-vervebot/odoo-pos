@@ -61,7 +61,9 @@ odoo.define('point_of_sale.PaymentScreen', function (require) {
         addNewPaymentLine({ detail: paymentMethod }) {
             // original function: click_paymentmethods
             let result = this.currentOrder.add_paymentline(paymentMethod);
+            
             if (result){
+                // alert("_updateSelectedPaymentline from payment screen.js =====  ", result);
                 NumberBuffer.reset();
                 return true;
             }
@@ -74,6 +76,7 @@ odoo.define('point_of_sale.PaymentScreen', function (require) {
             }
         }
         _updateSelectedPaymentline() {
+            
             if (this.paymentLines.every((line) => line.paid)) {
                 this.currentOrder.add_paymentline(this.payment_methods_from_config[0]);
             }
@@ -144,7 +147,10 @@ odoo.define('point_of_sale.PaymentScreen', function (require) {
             }
         }
         selectPaymentLine(event) {
+
+            
             const { cid } = event.detail;
+            
             const line = this.paymentLines.find((line) => line.cid === cid);
             this.currentOrder.select_paymentline(line);
             NumberBuffer.reset();
@@ -173,6 +179,7 @@ odoo.define('point_of_sale.PaymentScreen', function (require) {
                 }
             }
             if (await this._isOrderValid(isForceValidate)) {
+                
                 // remove pending payments before finalizing the validation
                 for (let line of this.paymentLines) {
                     if (!line.is_done()) this.currentOrder.remove_paymentline(line);

@@ -569,7 +569,22 @@ var PosDB = core.Class.extend({
     },
     get_device_ip: function() {
         return this.load('api_url');
+    },
+    set_scale_url: function(scale_url) {
+        // Always update if the user is the same as before
+        this.save('scale_url', scale_url || null);
+    },
+    get_scale_url: function() {
+        return this.load('scale_url');
+    },
+    set_customer_screen_url: function(customer_screen_url) {
+        // Always update if the user is the same as before
+        this.save('customer_screen_url', customer_screen_url || null);
+    },
+    get_customer_screen_url: function() {
+        return this.load('customer_screen_url');
     }
+    
 });
 
 return PosDB;

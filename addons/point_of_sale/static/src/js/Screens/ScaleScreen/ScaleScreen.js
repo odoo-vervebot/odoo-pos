@@ -122,8 +122,8 @@ odoo.define('point_of_sale.ScaleScreen', function(require) {
                     //     method: "POST",
                     // body: bodyContent,
 
-                    let device_url = this.env.pos.db.get_device_ip();
-                    await fetch(device_url, {
+                    let scale_url = this.env.pos.db.get_scale_url();
+                    await fetch(scale_url, {
                         method: "GET",                   
                         headers: headersList
                     }).then(function (response) {
@@ -131,7 +131,7 @@ odoo.define('point_of_sale.ScaleScreen', function(require) {
                     }).then(function (data) {
                         console.log("data : ", data);
                         console.log(JSON.parse(data));
-                        let tempWeightData = JSON.parse(data).weight
+                        let tempWeightData = JSON.parse(data).weight.replace(/(\r\n|\n|\r)/gm, "")
                         if (tempWeightData.includes(' lb.'))
                         {
                             console.log("data from API");

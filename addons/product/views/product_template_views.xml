@@ -48,6 +48,8 @@
                 <field name="size"/>
                 <field name="types"/>
                 <field name="visibility"/>
+                <field name="previous_price"/>
+
             </field>
 
             <div name="button_box" position="inside">

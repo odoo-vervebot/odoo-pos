@@ -40,7 +40,7 @@ odoo.define('point_of_sale.ClosePosPopup', function(require) {
                 // component state and refs definition
                 const state = {notes: '', acceptClosing: false, payments: {}};
                 if (this.cashControl) {
-                    state.payments[this.defaultCashDetails.id] = {counted: 0, difference: -this.defaultCashDetails.amount, number: 0};
+                    state.payments[this.defaultCashDetails.id] = {counted: this.defaultCashDetails.amount, difference: 0, number: 0};
                 }
                 if (this.otherPaymentMethods.length > 0) {
                     this.otherPaymentMethods.forEach(pm => {
@@ -73,7 +73,9 @@ odoo.define('point_of_sale.ClosePosPopup', function(require) {
         openDetailsPopup() {
             if (this.moneyDetailsRef.comp.isClosed()){
                 this.moneyDetailsRef.comp.openPopup();
-                this.state.payments[this.defaultCashDetails.id].counted = 0;
+                // changed
+                this.state.payments[this.defaultCashDetails.id].counted = this.defaultCashDetails.amount;
+                // console.log("this.state.payments[this.defaultCashDetails.id].counted ", this.state.payments[this.defaultCashDetails.id].counted);
                 this.state.payments[this.defaultCashDetails.id].difference = -this.defaultCashDetails.amount;
                 this.state.notes = '';
                 if (this.manualInputCashCount) {
@@ -89,9 +91,11 @@ odoo.define('point_of_sale.ClosePosPopup', function(require) {
                 this.manualInputCashCount = true;
                 this.state.notes = '';
                 expectedAmount = this.defaultCashDetails.amount;
+                console.log("this.defaultCashDetails.amount ", this.defaultCashDetails.amount);
             } else {
                 expectedAmount = this.otherPaymentMethods.find(pm => paymentId === pm.id).amount;
             }
+            console.log("expectedAmount ", expectedAmount);
             this.state.payments[paymentId].difference =
                 this.env.pos.round_decimals_currency(this.state.payments[paymentId].counted - expectedAmount);
             this.state.acceptClosing = false;

@@ -1356,3 +1356,7 @@ class Product_custom_fileds(models.Model):
     types = fields.Char('Type')
     visibility = fields.Char('Visibility')
 
+class Product_last_price(models.Model):
+    _inherit = "product.template"
+    previous_price = fields.Char('last price')
+
